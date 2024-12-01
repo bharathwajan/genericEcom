@@ -7,3 +7,10 @@
 * configure password in ```genericEcom\ecom\src\main\resources\hibernate.cfg.xml```
 * do clean install ``mvn clean install``
 * run it
+
+## Pending Work Items
+* Adding new attributes in products
+* Adding Table for customer(actual users)
+* Adding Table for clients(clients of our business)
+* UI for the endpoints (Learn REACT and do it)
+* Payment integration
