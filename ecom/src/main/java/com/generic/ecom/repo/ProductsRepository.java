@@ -30,6 +30,7 @@ public class ProductsRepository {
 
     // Find all products
     public List<Products> findAll() {
+        // This needs to be implemented catagory wise.
         Session session = sessionFactory.openSession();
         List<Products> productList = session.createQuery("from products", Products.class).list();
         session.close();
@@ -45,12 +46,15 @@ public class ProductsRepository {
     }
 
     // Update a product
-    public void update(Products product) {
+    public Integer update(Products product) {
+        //This update will make update only the given field and make others as null
+        //need to handle this in UI by providing a form with existing values so that user will alter only the required and keep the other same
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(product);
+        session.merge(product);
         transaction.commit();
         session.close();
+        return product.getProdId();
     }
 
     // Delete a product
@@ -59,7 +63,7 @@ public class ProductsRepository {
         Transaction transaction = session.beginTransaction();
         Products product = session.get(Products.class, id);
         if (product != null) {
-            session.delete(product);
+            session.remove(product);
         }
         transaction.commit();
         session.close();

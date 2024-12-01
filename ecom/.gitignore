@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### config Files with passwords ##
-C:\Users\Bharathwajan R\Desktop\genericEcom\ecom\src\main\resources\hibernate.cfg.xml
+/src/main/resources/hibernate.cfg.xml

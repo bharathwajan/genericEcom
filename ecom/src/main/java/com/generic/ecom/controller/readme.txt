@@ -1,1 +1,0 @@
-Each java file is a controller for each page in the website
