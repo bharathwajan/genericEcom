@@ -11,9 +11,7 @@ import java.util.List;
 
 @Repository
 public class ProductsRepository {
-
     private final SessionFactory sessionFactory;
-
     public ProductsRepository(){
         this.sessionFactory = new Configuration().configure().buildSessionFactory();
     }
@@ -27,7 +25,6 @@ public class ProductsRepository {
         session.close();
         return product.getProdId();
     }
-
     // Find all products
     public List<Products> findAll() {
         // This needs to be implemented catagory wise.
