@@ -28,7 +28,8 @@ public class UserRepo {
                 transaction.rollback(); // Rollback in case of an error
             }
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             session.close(); // Close the session
         }
     }
