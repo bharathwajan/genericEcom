@@ -13,20 +13,27 @@ import java.util.Map;
 
 @RestController
 public class HomepageController {
-
     private final static String RESPONSE_ATTR_NAME = "response";
     private final ProductsRepository repo;
+    private Map<String, String> response = new HashMap<>(); // doing like this is not thread safe
+    //The response map will only be garbage collected if the entire HomepageController bean itself is:
+    // Removed from the Spring context Dereferenced by all active threads
 
-    Map<String, String> response = new HashMap<>();
+    private Map<String, String> HitCounter = new HashMap<>(); // doing like this is not thread safe
+    @GetMapping("/")
+    public String homepage(HttpServletRequest request){
+        for(int i=0;i<10000;i++){
+            HitCounter.put("Count"+String.valueOf(i), String.valueOf(i));
+        }
+        return "welcome Bharathwajan "+request.getSession().getId();
+    }
+
     public HomepageController(ProductsRepository repo){
         //constructor injection
         this.repo=repo;
     }
 
-    @GetMapping("/")
-    public String homepage(HttpServletRequest request){
-        return "welcome Bharathwajan "+request.getSession().getId();
-    }
+
 
     @GetMapping("/healthCheck")
     public Map<String, String> healthCheck(){
