@@ -14,3 +14,8 @@
 * Adding Table for clients(clients of our business)
 * UI for the endpoints (Learn REACT and do it)
 * Payment integration
+
+## works did so far
+* implemented hibernate
+* implemented spring security which validates user from database
+* implemented password encoding with Bcrypt

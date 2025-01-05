@@ -13,7 +13,7 @@ public class UserPrinciple implements UserDetails {
     into the system this class is used to get info about that guy/girl
     */
 
-    @Autowired
+
     private Users user;
     public UserPrinciple(Users user) {
         this.user=user;

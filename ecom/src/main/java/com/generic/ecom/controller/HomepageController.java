@@ -24,8 +24,8 @@ public class HomepageController {
     }
 
     @GetMapping("/")
-    public String homepage(){
-        return "welcome Bharathwajanr";
+    public String homepage(HttpServletRequest request){
+        return "welcome Bharathwajan "+request.getSession().getId();
     }
 
     @GetMapping("/healthCheck")

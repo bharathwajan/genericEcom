@@ -5,18 +5,44 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+
+// think this file as a config file
 
 @Configuration
 @EnableWebSecurity
-public class securityService {
+public class securityConfig {
 
     @Autowired
     private ecomUserDetailsService userDetailsService;
+
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        /*
+        Bean to overide the default filter chain.
+         */
+        http.csrf(customizer -> customizer.disable())
+                .authorizeHttpRequests(request -> request.requestMatchers("/signIn","/healthCheck")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+                ).httpBasic(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+
+        return http.build();
+    }
 
     @Bean
     public AuthenticationProvider authProvider() {
