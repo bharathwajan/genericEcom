@@ -18,7 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-// think this file as a config file
+// think this file as a config file for the security purpose
+// methods and uses
+
 
 @Configuration
 @EnableWebSecurity
