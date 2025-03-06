@@ -12,7 +12,11 @@ import org.springframework.stereotype.Repository;
 public class UserRepo {
     private final SessionFactory sessionFactory;
     public UserRepo(){
-        this.sessionFactory=new Configuration().configure().buildSessionFactory();
+        Configuration config = new Configuration();
+        config.setProperty("hibernate.connection.url", System.getenv("DB_URL"));
+        config.setProperty("hibernate.connection.username", System.getenv("DB_USERNAME"));
+        config.setProperty("hibernate.connection.password", System.getenv("DB_PASSWORD"));
+        this.sessionFactory = config.configure().buildSessionFactory();
     }
 
     // Save a new user to the database

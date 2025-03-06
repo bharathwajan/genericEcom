@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class EcomApplication extends SpringBootServletInitializer {
+public class EcomApplication  {
 	public static void main(String[] args) {
 		System.out.println("Ecom Application Starting .... ");
 		SpringApplication.run(EcomApplication.class, args);

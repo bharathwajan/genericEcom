@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_container
+    restart: always
+    environment:
+    # Creating a db and user for it.
+      POSTGRES_DB: ecom
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sample_password
+    # Inside the container it runs on 5432 for outside(local Machine) it is exposed in 5433
+    ports:
+      - "5433:5432"
+    # Volumes are used to store the data in local --> even if the container goes down/deleted the data will be taken from this place , /var/... is WSL path
+#    volumes:
+#      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: ecom_app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "9090:8080"
+#    inside the container it runs on 5432 for outside(local machine) it is exposed in 5433
+volumes:
+  pgdata:
