@@ -28,6 +28,6 @@ services:
       - db
     ports:
       - "9090:8080"
-#    inside the container it runs on 5432 for outside(local machine) it is exposed in 5433
+#    inside the container it runs on 8080 for outside(local machine) it is exposed in 9090
 volumes:
   pgdata:
