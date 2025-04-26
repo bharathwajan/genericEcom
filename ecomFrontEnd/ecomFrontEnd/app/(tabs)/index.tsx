@@ -2,20 +2,16 @@ import React from 'react';
 import {Text, View, StyleSheet, ScrollView, TextInput} from 'react-native';
 import { colorScheme, useColorScheme } from "nativewind";
 
-// Use imperatively
-colorScheme.set(`dark`);
+
 
 //https://reactnative.dev/docs/intro-react
 
 export default function Index() {
     let name: string = 'Bharathwajan R';
-    const { setColorScheme } = useColorScheme();
-    setColorScheme("dark");
 
     return (
-        <>
+        <> // single root element
             {/* Top Rectangle (Budget and Spent) */}
-
             <View   style={styles.topRectangle}>
                 <View style={styles.textContainer}>
                     <Text style={styles.budgetText}>Budget</Text>
