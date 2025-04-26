@@ -20,7 +20,9 @@ services:
   app:
     # build: . --> Docker will build the app container from the Dockerfile located in the current directory.
     build: .
-    container_name: ecom_app
+    # build using DockerFile and gives the name "ecom_app"
+    image: ecom_app_image
+    container_name: ecom_app_container
     restart: always
     depends_on:
       - db
