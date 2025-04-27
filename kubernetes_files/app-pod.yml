@@ -1,0 +1,19 @@
+# Used to create a pod for the e-commerce application
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod # Name of the pod
+spec:
+  containers:
+    - name: ecom-app
+      image: ecom_app_image:latest  # Using the image builded previously using docker compose file
+      imagePullPolicy: IfNotPresent  # Pull the image only if it is not present locally
+      ports:
+        - containerPort: 8080  # The port the app listens to inside the container
+      env: # specifies the environment variable for the container
+        - name: DB_URL
+          value: "jdbc:postgresql://postgres-service:5432/ecom"  # postgres-service is the name of the service created for the postgres pod
+        - name: DB_USERNAME
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "sample_password"
