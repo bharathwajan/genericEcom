@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: app-pod # Name of the pod
+  labels:
+    app: app-pod # identification for the pod
 spec:
   containers:
     - name: ecom-app
