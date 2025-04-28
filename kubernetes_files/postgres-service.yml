@@ -3,11 +3,11 @@
  metadata:
    name: postgres-service
  spec:
-   type: NodePort
+   type: NodePort # used to forward the port to outside world
    selector:
      app: postgres
    ports:
      - protocol: TCP
-       port: 5432
+       port: 5432 # for differentiating between these port,targetPort and nodePort refer google docs
        targetPort: 5432
        nodePort: 30432
