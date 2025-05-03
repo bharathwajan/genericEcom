@@ -1,19 +1,16 @@
-# Use Eclipse Temurin OpenJDK 21 as the base image
-FROM eclipse-temurin:21-jdk
+# Build stage
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS builder
+WORKDIR /build
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Set working directory inside the container
+# Runtime stage (lighter JRE)
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-
-# Declare environment variables (optional default values)
 ENV DB_URL="jdbc:postgresql://192.168.29.107:5433/ecom"
 ENV DB_USERNAME="postgres"
 ENV DB_PASSWORD="sample_password"
-
-# Copy the application JAR file to the container
-COPY target/ecom-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the application port
+COPY --from=builder /build/target/ecom-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Run the application
 CMD ["java", "-jar", "app.jar"]
