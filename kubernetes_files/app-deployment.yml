@@ -1,0 +1,36 @@
+# replication controller is the older one, it is not recommended to use it anymore instead we should use replica set
+apiVersion: apps/v1
+kind: Deployment # this will create a replica set and a pod
+metadata:
+  name: app-deployment # Name of the deployment
+  labels:
+    app: app-deployment # identification for the deployment
+spec:
+  replicas: 3 # Number of replicas to be created
+  selector:    # Explicit selector added here --> if not given it will use the labels of the pod template
+    matchLabels: # This is the new way to specify the selector in ReplicaSet or you can use matchExpressions as well
+      app: app-pod # This selector should match the labels of the pods you want to manage
+    matchExpressions: # This is the new way to specify the selector in ReplicaSet or you can use matchLabels as well
+      - key: app
+        operator: In # This is the new way to specify the selector in ReplicaSet or you can use matchLabels as well
+        values:
+          - app-pod # This selector should match the labels of the pods you want to manage
+  template: # Template is used to create the pods -->  this is copy pasted from app-pod.yml 
+    metadata:
+      labels:
+        app: app-pod # identification for the pod
+    spec:
+      containers:
+        - name: ecom-app
+          image: ecom_app_image:latest  # Using the image builded previously using docker compose file
+          imagePullPolicy: IfNotPresent  # Pull the image only if it is not present locally
+          ports:
+            - containerPort: 8080  # The port the app listens to inside the container
+          env: # specifies the environment variable for the container
+            - name: DB_URL
+              value: "jdbc:postgresql://postgres-service:5432/ecom"  # postgres-service is the name of the service created for the postgres pod
+            - name: DB_USERNAME
+              value: "postgres"
+            - name: DB_PASSWORD
+              value: "sample_password"
+  
