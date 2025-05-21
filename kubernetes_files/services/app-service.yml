@@ -2,8 +2,9 @@
  kind: Service
  metadata:
    name: app-service
+   namespace: production # Namespace in which the service will be created
  spec:
-   type: NodePort
+   type: NodePort # Type of service (NodePort in this case)
    selector:
      app: app-pod # This selector should match the labels(strictly labels) of the pods you want to expose
    # This selector should match the labels of the pods you want to expose

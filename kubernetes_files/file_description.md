@@ -12,3 +12,4 @@ Used to control replica in a legacy way
 Used to control replica in a modern way , the difference between replication controller and sets is specified in docs
 ## app-deployments
 Used to create deployment --> which will create replicaSet upon applying
+## postgres-deployments

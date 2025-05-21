@@ -2,6 +2,7 @@
  kind: Service
  metadata:
    name: postgres-service
+   namespace: production # Namespace in which the service will be created
  spec:
    type: NodePort # used to forward the port to outside world
    selector:

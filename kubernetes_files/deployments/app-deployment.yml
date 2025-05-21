@@ -1,10 +1,11 @@
 # replication controller is the older one, it is not recommended to use it anymore instead we should use replica set
 apiVersion: apps/v1
-kind: Deployment # this will create a replica set and a pod
+kind: Deployment # this will create a repe2lica set and a pod
 metadata:
   name: app-deployment # Name of the deployment
   labels:
     app: app-deployment # identification for the deployment
+  namespace: production # Namespace in which the deployment will be created
 spec:
   replicas: 3 # Number of replicas to be created
   selector:    # Explicit selector added here --> if not given it will use the labels of the pod template
@@ -33,4 +34,3 @@ spec:
               value: "postgres"
             - name: DB_PASSWORD
               value: "sample_password"
-  
