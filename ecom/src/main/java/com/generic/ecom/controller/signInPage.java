@@ -23,7 +23,7 @@ public class signInPage {
     @PostMapping("/signIn")
     public Map<String,String> signIn(@RequestBody Users user){
         user.setPassword(passEncoder.encode(user.getPassword()));
-        userRepo.saveUser(user);
+        userRepo.save(user);
         Map<String,String> response=new HashMap<>();
         response.put(RESPONSE_ATTR_NAME,"Account Created Sucessfully");
         return response;
