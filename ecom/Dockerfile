@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Declare environment variables (optional default values)
-ENV DB_URL="jdbc:postgresql://192.168.29.107:5433/ecom"
+ENV DB_URL="jdbc:postgresql://db:5432/ecom"
 ENV DB_USERNAME="postgres"
 ENV DB_PASSWORD="sample_password"
 
