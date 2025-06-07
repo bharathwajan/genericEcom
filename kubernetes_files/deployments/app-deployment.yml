@@ -27,7 +27,7 @@ spec:
           imagePullPolicy: IfNotPresent  # Pull the image only if it is not present locally
           ports:
             - containerPort: 8080  # The port the app listens to inside the container
-          env: # specifies the environment variable for the container
+          env: # specifies the environment variable for the container # This env variables will override the env variables in the dockerfile in dockerFile en connectionn URL will be different 
             - name: DB_URL
               value: "jdbc:postgresql://postgres-service:5432/ecom"  # postgres-service is the name of the service created for the postgres pod
             - name: DB_USERNAME
