@@ -19,3 +19,7 @@
 * implemented hibernate
 * implemented spring security which validates user from database
 * implemented password encoding with Bcrypt
+
+
+
+branch feature/JPA --> migrated from hibernate to JPA.

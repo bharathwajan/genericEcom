@@ -1,5 +1,6 @@
 package com.generic.ecom.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -8,10 +9,15 @@ import jakarta.persistence.Table;
 @Table(name = "users") // Specify table name
 public class Users {
     @Id
+    @Column(name = "username")
     private String userName;
+    @Column(name = "password")
     private String password;
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "lastname")
     private String lastName;
+    @Column(name = "email")
     private String email;
 
     public String getUserName() {

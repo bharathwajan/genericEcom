@@ -9,6 +9,9 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 ENV DB_URL="jdbc:postgresql://192.168.29.107:5433/ecom"
+
+# Declare environment variables (optional default values)
+ENV DB_URL="jdbc:postgresql://db:5432/ecom"
 ENV DB_USERNAME="postgres"
 ENV DB_PASSWORD="sample_password"
 COPY --from=builder /build/target/ecom-0.0.1-SNAPSHOT.jar app.jar

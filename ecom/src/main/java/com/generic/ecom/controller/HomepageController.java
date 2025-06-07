@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -36,7 +37,7 @@ public class HomepageController {
 
     @PostMapping("/putProducts")
     public Map<String,String> putProducts(@RequestBody Products prods){
-        Integer prodId=repo.save(prods);
+        Integer prodId= repo.save(prods).getProdId();
         response.put(RESPONSE_ATTR_NAME, String.format("Product %d added sucessfully",prodId));
         return response;
     }
@@ -48,22 +49,22 @@ public class HomepageController {
 
     @GetMapping("/getProduct/{prodId}")
     public Map<String,Products> getProduct(@PathVariable Integer prodId){
-        Products product=repo.findById(prodId);
+        Optional<Products> product=repo.findById(prodId);
         Map<String, Products> response = new HashMap<>();
-        response.put(RESPONSE_ATTR_NAME, product);
+        response.put(RESPONSE_ATTR_NAME, product.get());
         return response;
     }
 
     @PutMapping("/updateProduct")
     public Map<String,String> updateProducts(@RequestBody Products prod){
-        Integer prodId=repo.update(prod);
+        Integer prodId=repo.save(prod).getProdId();
         response.put(RESPONSE_ATTR_NAME,String.format("Product %d updated sucessfully",prodId));
         return  response;
     }
 
     @DeleteMapping("/deleteProduct/{prodId}")
     public Map<String,String> deleteProduct(@PathVariable Integer prodId){
-        repo.delete(prodId);
+        repo.deleteById(prodId);
         response.put(RESPONSE_ATTR_NAME,String.format("Product %d deleted sucessfully",prodId));
         return  response;
     }
