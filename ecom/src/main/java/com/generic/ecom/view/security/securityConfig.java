@@ -3,9 +3,11 @@ package com.generic.ecom.view.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,17 +38,24 @@ public class securityConfig {
         /*
         Bean to overide the default filter chain.
          */
-        http.csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests(request -> request.requestMatchers("/signIn","/healthCheck","/login")
+        http.authorizeHttpRequests(request -> request.requestMatchers("/signIn","/healthCheck","/login")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
                 ).httpBasic(Customizer.withDefaults())
-                .csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
+                .csrf((csrf) -> csrf
+                        .ignoringRequestMatchers("/login","/signIn","healthCheck")
+                        .csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         return http.build();
     }
+
+
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+//        return config.getAuthenticationManager(); // since AuthenticationManager is an interface we need to return the implementation of it
+//    }
 
     @Bean
     public AuthenticationProvider authProvider() {
