@@ -49,6 +49,7 @@ public class HomepageController {
 
     @GetMapping("/getProduct/{prodId}")
     public Map<String,Products> getProduct(@PathVariable Integer prodId){
+        System.out.println("Get request received for the  Product : " + prodId);
         Optional<Products> product=repo.findById(prodId);
         Map<String, Products> response = new HashMap<>();
         response.put(RESPONSE_ATTR_NAME, product.get());

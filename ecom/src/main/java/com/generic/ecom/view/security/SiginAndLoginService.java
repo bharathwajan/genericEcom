@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class SiginAndLoginService {
     private AuthenticationManager authManager;
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private JWTService jwtService;
+
+
     private final static String RESPONSE_ATTR_NAME = "response";
     BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder(6);
 
@@ -41,6 +46,7 @@ public class SiginAndLoginService {
         Map<String, String> response = new HashMap<>();
         Authentication auth=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
         if (auth.isAuthenticated()) {
+            response.put("JWT-token",jwtService.generateToken(user.getUserName()));
             response.put("sessionId", request.getSession().getId());
             response.put("CSRFtoken", ((CsrfToken) request.getAttribute("_csrf")).getToken());
             response.put(RESPONSE_ATTR_NAME, "Login Sucessfull");
