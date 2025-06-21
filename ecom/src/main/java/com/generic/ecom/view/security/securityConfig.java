@@ -31,8 +31,6 @@ public class securityConfig {
 
     @Autowired
     private ecomUserDetailsService userDetailsService;
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
@@ -50,13 +48,10 @@ public class securityConfig {
 
         return http.build();
     }
-
-
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        return config.getAuthenticationManager(); // since AuthenticationManager is an interface we need to return the implementation of it
-//    }
-
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager(); // since AuthenticationManager is an interface we need to return the implementation of it
+    }
     @Bean
     public AuthenticationProvider authProvider() {
         /*
@@ -69,12 +64,10 @@ public class securityConfig {
          returns an authenticated Authentication object or throws an exception if the authentication fails.
          */
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(new BCryptPasswordEncoder(5));
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(6));
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }
-
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 //        return new WebSecurityCustomizer() {    --> this is calles ananomous class
