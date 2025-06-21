@@ -55,6 +55,7 @@ public class SiginAndLoginService {
         );
 
         if (auth.isAuthenticated()) {
+            response.put("token", jwtService.generateToken(user.getUserName()));
             response.put("sessionId", request.getSession().getId());
             response.put("CSRFtoken", ((CsrfToken) request.getAttribute("_csrf")).getToken());
             response.put(RESPONSE_ATTR_NAME, "Login Sucessfull");

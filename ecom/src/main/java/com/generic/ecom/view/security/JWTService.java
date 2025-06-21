@@ -26,20 +26,22 @@ import javax.crypto.SecretKey;
 @Service
 public class JWTService {
 
-
+    @Value("${spring.security.jwt.secret}")
     private String secretKey;
+    // I prefer using the secret key from the applciation instead of generating it dynamically. --> for security purposes and for the deployment ease .
 
-    public JWTService(){
-        try {
-            KeyGenerator hmacSHA256 = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey sk = hmacSHA256.generateKey();
-            secretKey=Base64.getEncoder().encodeToString(sk.getEncoded()); // instead we can our own key as well.
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public JWTService(){
+//        try {
+//            KeyGenerator hmacSHA256 = KeyGenerator.getInstance("HmacSHA256");
+//            SecretKey sk = hmacSHA256.generateKey();
+//            secretKey=Base64.getEncoder().encodeToString(sk.getEncoded()); // instead we can our own key as well.
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public String generateToken(String userName) {
+        System.out.println("Key used to generate token : "+secretKey);
         Map<String,Object> claims=new HashMap<>();
         String expiration = Jwts.builder()
                 .claims()
