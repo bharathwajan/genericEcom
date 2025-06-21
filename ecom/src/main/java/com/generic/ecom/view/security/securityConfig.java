@@ -52,10 +52,10 @@ public class securityConfig {
     }
 
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        return config.getAuthenticationManager(); // since AuthenticationManager is an interface we need to return the implementation of it
-//    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager(); // since AuthenticationManager is an interface we need to return the implementation of it
+    }
 
     @Bean
     public AuthenticationProvider authProvider() {

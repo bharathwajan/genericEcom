@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class signInPage {
+public class LoginAndSignInController {
     private final static String RESPONSE_ATTR_NAME = "response";
 
     @Autowired
@@ -29,10 +29,7 @@ public class signInPage {
     }
 
     @PostMapping("/login")
-    public Map<String,String> login(HttpServletRequest request){
-        // spring security will have this endpoint exposed for us but we are overriding it for our own implementation
-        // to override this endpoint we need to configure the filter chain also refer the securityConfig.java if we didn't override
-        // the default filter chain spring will always its own implementation for login page.
-        return  signInAndLoginService.verify(request);
+    public Map<String,String> login(@RequestBody Users user,HttpServletRequest request){
+        return  signInAndLoginService.verify(user,request);
     }
 }
