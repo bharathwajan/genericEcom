@@ -1,5 +1,6 @@
 package com.generic.ecom.view.security;
 
+import com.generic.ecom.view.customFilters.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -31,6 +33,9 @@ public class securityConfig {
 
     @Autowired
     private ecomUserDetailsService userDetailsService;
+    @Autowired
+    private JWTFilter JwtFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
@@ -40,11 +45,10 @@ public class securityConfig {
                         .permitAll()
                         .anyRequest()
                         .authenticated()
-                ).httpBasic(Customizer.withDefaults())
-                .csrf((csrf) -> csrf
-                        .ignoringRequestMatchers("/login","/signIn","healthCheck")
-                        .csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                ).httpBasic(withDefaults())
+                .csrf((csrf) -> csrf.disable())
+                .addFilterBefore(JwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
@@ -65,7 +69,7 @@ public class securityConfig {
          */
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(new BCryptPasswordEncoder(6));
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(userDetailsService); // userDetails Service is the logic to verify the user existense in the db
         return provider;
     }
     @Bean
