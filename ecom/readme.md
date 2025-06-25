@@ -1,6 +1,6 @@
 ## Prerequist:
 * Java 21
-* postgres
+* postgres.
 
 ## Configuration
 * create a database named ecom
