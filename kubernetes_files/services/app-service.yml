@@ -1,0 +1,16 @@
+ apiVersion: v1
+ kind: Service
+ metadata:
+   name: app-service
+   namespace: production # Namespace in which the service will be created
+ spec:
+   type: NodePort # Type of service (NodePort in this case)
+   selector:
+     app: app-pod # This selector should match the labels(strictly labels) of the pods you want to expose
+   # This selector should match the labels of the pods you want to expose
+   # The selector is used to find the pods that this service will route traffic to
+   ports:
+     - protocol: TCP # Protocol used by the service (TCP in this case)
+       port: 8080       # Pod's container port
+       targetPort: 8080 # Pod's container port
+       nodePort: 30080  # External port you want (can access via localhost:30080)

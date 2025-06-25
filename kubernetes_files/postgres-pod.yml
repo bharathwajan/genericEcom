@@ -1,0 +1,20 @@
+# This file is used to create a pod and service for PostgreSQL database
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-pod
+  labels:
+    app: postgres
+spec:
+  containers:
+    - name: postgres
+      image: postgres:16
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_DB
+          value: ecom
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: sample_password

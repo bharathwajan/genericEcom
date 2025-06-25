@@ -1,0 +1,31 @@
+# replication controller is the older one, it is not recommended to use it anymore instead we should use replica set
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: postgres-deployment 
+  labels:
+    app: postgres-deployment 
+  namespace: production # Namespace in which the deployment will be created
+spec:
+  replicas: 1 
+  selector:    
+    matchLabels: 
+      app: postgres
+  template: 
+    metadata:
+      name: postgres-pod
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: ecom
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: sample_password

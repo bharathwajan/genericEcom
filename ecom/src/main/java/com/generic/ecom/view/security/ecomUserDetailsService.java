@@ -17,6 +17,9 @@ public class ecomUserDetailsService implements UserDetailsService {
      */
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private  JWTService jwtService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         /*
@@ -30,6 +33,6 @@ public class ecomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username+"not found");
         }
         // else you need to return UserDetails
-        return new UserPrinciple(user);
+        return new UserPrinciple(user); // user principle implements UserDetails interface so we can return it here
     }
 }

@@ -1,11 +1,14 @@
 package com.generic.ecom.view.security;
 
+import com.generic.ecom.view.customFilters.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,6 +18,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -28,24 +33,29 @@ public class securityConfig {
 
     @Autowired
     private ecomUserDetailsService userDetailsService;
-
+    @Autowired
+    private JWTFilter JwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
         Bean to overide the default filter chain.
          */
-        http.csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests(request -> request.requestMatchers("/signIn","/healthCheck")
+        http.authorizeHttpRequests(request -> request.requestMatchers("/signIn","/healthCheck","/login")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
-                ).httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                ).httpBasic(withDefaults())
+                .csrf((csrf) -> csrf.disable())
+                .addFilterBefore(JwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
-
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager(); // since AuthenticationManager is an interface we need to return the implementation of it
+    }
     @Bean
     public AuthenticationProvider authProvider() {
         /*
@@ -58,12 +68,10 @@ public class securityConfig {
          returns an authenticated Authentication object or throws an exception if the authentication fails.
          */
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(new BCryptPasswordEncoder(5));
-        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(6));
+        provider.setUserDetailsService(userDetailsService); // userDetails Service is the logic to verify the user existense in the db
         return provider;
     }
-
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 //        return new WebSecurityCustomizer() {    --> this is calles ananomous class
