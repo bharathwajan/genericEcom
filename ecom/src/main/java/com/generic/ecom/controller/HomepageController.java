@@ -3,6 +3,7 @@ package com.generic.ecom.controller;
 import com.generic.ecom.model.Products;
 import com.generic.ecom.repo.ProductsRepository;
 
+import com.generic.ecom.serviceInterfaces.NotificationServiceInterface;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +18,22 @@ public class HomepageController {
 
     private final static String RESPONSE_ATTR_NAME = "response";
     private final ProductsRepository repo;
+    private final NotificationServiceInterface notificationService;
 
     Map<String, String> response = new HashMap<>();
-    public HomepageController(ProductsRepository repo){
+    public HomepageController(ProductsRepository repo, NotificationServiceInterface notificationService) {
+        this.notificationService = notificationService;
         //constructor injection
         this.repo=repo;
+    }
+    @GetMapping("/getProduct/{prodId}")
+    public Map<String,Products> getProduct(@PathVariable Integer prodId){
+        System.out.println("Get request received for the  Product : " + prodId);
+        Optional<Products> product=repo.findById(prodId);
+        Map<String, Products> response = new HashMap<>();
+        notificationService.sendNotification( Map.of("to", "bharathwajanr", "message", "notification from ecom service"));
+        response.put(RESPONSE_ATTR_NAME, product.get());
+        return response;
     }
 
     @GetMapping("/")
@@ -47,14 +59,7 @@ public class HomepageController {
         return (CsrfToken)request.getAttribute("_csrf");
     }
 
-    @GetMapping("/getProduct/{prodId}")
-    public Map<String,Products> getProduct(@PathVariable Integer prodId){
-        System.out.println("Get request received for the  Product : " + prodId);
-        Optional<Products> product=repo.findById(prodId);
-        Map<String, Products> response = new HashMap<>();
-        response.put(RESPONSE_ATTR_NAME, product.get());
-        return response;
-    }
+
 
     @PutMapping("/updateProduct")
     public Map<String,String> updateProducts(@RequestBody Products prod){

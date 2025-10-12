@@ -23,3 +23,4 @@
 
 
 branch feature/JPA --> migrated from hibernate to JPA.
+branch feature/microservice --> Made ecom as a service  which is eligible for a microservice archcitecture.
