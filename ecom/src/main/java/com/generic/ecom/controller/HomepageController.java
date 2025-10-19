@@ -26,6 +26,7 @@ public class HomepageController {
         //constructor injection
         this.repo=repo;
     }
+
     @GetMapping("/getProduct/{prodId}")
     public Map<String,Products> getProduct(@PathVariable Integer prodId){
         System.out.println("Get request received for the  Product : " + prodId);
