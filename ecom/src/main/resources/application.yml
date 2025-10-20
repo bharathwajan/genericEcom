@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:ecom}        # optional, defaults to 'ecom'
+  server:
+    port: ${APPLICATION_PORT:8080}
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  security:
+    jwt:
+      secret: ${Hs256SecretKey:Evb7Mepwi49E8pXiFehyF4cI54+POA9dr1OjtpyhVkc=}
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    hostname: localhost
+#    prefer-ip-address: true
+
+grpc:
+  client:
+    NOTIFICATION-SERVICE:
+      address: "static://localhost:9090"
+      negotiation-type: plaintext

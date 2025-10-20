@@ -3,7 +3,9 @@ package com.generic.ecom.controller;
 import com.generic.ecom.model.Products;
 import com.generic.ecom.repo.ProductsRepository;
 
-import com.generic.ecom.serviceInterfaces.NotificationServiceInterface;
+//import com.generic.ecom.serviceInterfaces.NotificationServiceInterface;
+import com.generic.ecom.view.Services.NotificationServiceGRPCClient;
+import com.learning.common.SendNotificationResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,10 @@ public class HomepageController {
 
     private final static String RESPONSE_ATTR_NAME = "response";
     private final ProductsRepository repo;
-    private final NotificationServiceInterface notificationService;
+    private final NotificationServiceGRPCClient notificationService;
 
     Map<String, String> response = new HashMap<>();
-    public HomepageController(ProductsRepository repo, NotificationServiceInterface notificationService) {
+    public HomepageController(ProductsRepository repo, NotificationServiceGRPCClient notificationService) {
         this.notificationService = notificationService;
         //constructor injection
         this.repo=repo;
@@ -32,7 +34,7 @@ public class HomepageController {
         System.out.println("Get request received for the  Product : " + prodId);
         Optional<Products> product=repo.findById(prodId);
         Map<String, Products> response = new HashMap<>();
-        notificationService.sendNotification( Map.of("to", "bharathwajanr", "message", "notification from ecom service"));
+        SendNotificationResponse notificationRes = notificationService.sendNotification( "bharathwajanr", "notification from ecom service");
         response.put(RESPONSE_ATTR_NAME, product.get());
         return response;
     }
