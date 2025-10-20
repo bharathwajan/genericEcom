@@ -1,8 +1,6 @@
 spring:
   application:
-    name: ${APPLICATION_NAME:ecom}        # optional, defaults to 'ecom'
-  server:
-    port: ${APPLICATION_PORT:8080}
+    name: ecom        # optional, defaults to 'ecom'
 
   datasource:
     url: ${DB_URL}
@@ -17,14 +15,10 @@ spring:
   security:
     jwt:
       secret: ${Hs256SecretKey:Evb7Mepwi49E8pXiFehyF4cI54+POA9dr1OjtpyhVkc=}
-#
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
-#  instance:
-#    hostname: localhost
-#    prefer-ip-address: true
+
+server:
+  port: ${APPLICATION_PORT:8081}
+
 
 grpc:
   client:
