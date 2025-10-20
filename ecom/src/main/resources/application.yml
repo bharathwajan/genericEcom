@@ -1,27 +1,32 @@
-spring:
-  application:
-    name: ecom        # optional, defaults to 'ecom'
-
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-
-  security:
-    jwt:
-      secret: ${Hs256SecretKey:Evb7Mepwi49E8pXiFehyF4cI54+POA9dr1OjtpyhVkc=}
-
-server:
-  port: ${APPLICATION_PORT:8081}
-
-
-grpc:
-  client:
-    NOTIFICATION-SERVICE:
-      address: "static://localhost:9090"
-      negotiation-type: plaintext
+#spring:
+#  application:
+#    name: ecom        # optional, defaults to 'ecom'
+#
+#  datasource:
+#    url: ${DB_URL}
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+#    driver-class-name: org.postgresql.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#
+#  security:
+#    jwt:
+#      secret: ${Hs256SecretKey:Evb7Mepwi49E8pXiFehyF4cI54+POA9dr1OjtpyhVkc=}
+#
+#server:
+#  port: ${APPLICATION_PORT:8081}
+#
+#eureka:
+#  instance:
+#    hostname: ${EUREKA_HOSTNAME:localhost}
+#    prefer-ip-address: ${EUREKA_PREFER_IP:false}
+#
+#
+#grpc:
+#  client:
+#    NOTIFICATION-SERVICE:
+#      address: "static://localhost:9090" #service name registered in eureka server
+#      negotiation-type: plaintext
