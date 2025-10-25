@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NotificationServiceGRPCClient {
-    @GrpcClient("NOTIFICATION-SERVICE")
+    @GrpcClient("NOTIFICATION-SERVICE-CLIENT")
     private NotificationServiceGrpc.NotificationServiceBlockingStub notificationServiceStub; // This is blocking stub used for unary calls
 
     public SendNotificationResponse sendNotification(String to,String message) {
