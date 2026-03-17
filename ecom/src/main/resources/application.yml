@@ -11,6 +11,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      jakarta:
+        persistence:
+          schema-generation:
+            scripts:
+              action: create
+              create-target: src/main/resources/schema-creation.sql
 
   security:
     jwt:
@@ -19,9 +27,8 @@ spring:
 server:
   port: ${APPLICATION_PORT:8081}
 
-
 grpc:
   client:
-    NOTIFICATION-SERVICE:
+    NOTIFICATION-SERVICE: # this is refered in the code NotificationServiceGRPClient.java
       address: "static://localhost:9090"
       negotiation-type: plaintext
