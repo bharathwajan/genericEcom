@@ -1,11 +1,14 @@
 package com.generic.ecom.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity(name = "Products")
+@Table(
+        indexes = {
+                @Index(name = "prod_name_index", columnList = "prodName"),
+                @Index(name = "prod_description_index", columnList = "prodDescription")
+        }
+)
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
