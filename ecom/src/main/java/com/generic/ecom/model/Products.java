@@ -2,6 +2,8 @@ package com.generic.ecom.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity(name = "Products")
 @Table(
         indexes = {
@@ -9,7 +11,7 @@ import jakarta.persistence.*;
                 @Index(name = "prod_description_index", columnList = "prodDescription")
         }
 )
-public class Products {
+public class Products implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prod_id")

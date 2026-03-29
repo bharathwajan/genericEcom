@@ -20,9 +20,22 @@ spring:
   security:
     jwt:
       secret: ${Hs256SecretKey:Evb7Mepwi49E8pXiFehyF4cI54+POA9dr1OjtpyhVkc=}
+
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 200ms          # connection + read timeout
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 4
+        max-wait: 500ms     # must NOT be -1
+      shutdown-timeout: 100ms
+
   cache:
     # This is the switch to turn on/off caching Can take value like simple,none,redis
-    type: simple
+    type: redis
+
 
 server:
   port: ${APPLICATION_PORT:8081}

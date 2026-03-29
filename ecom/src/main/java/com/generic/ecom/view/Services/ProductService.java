@@ -4,6 +4,7 @@ import com.generic.ecom.model.Products;
 import com.generic.ecom.repo.ProductsRepo;
 import com.generic.ecom.view.Constants;
 import org.hibernate.annotations.Cache;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class ProductService {
         return repository.save(p);
     }
 
+    @CacheEvict(value = Constants.CacheConstants.product,key = "#id")
     public void deleteProductById(Integer id){
         repository.deleteById(id);
     }

@@ -3,7 +3,12 @@ package com.generic.ecom.view;
 import com.generic.ecom.view.security.customFilters.JWTFilter;
 import com.generic.ecom.view.security.ecomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -32,7 +37,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @EnableCaching // This annotation will enable caching
 @EnableScheduling // This annotation will enable scheduling
-public class ConfigClass implements SchedulingConfigurer {
+public class ConfigClass implements SchedulingConfigurer, CachingConfigurer {
 
     @Autowired
     private ecomUserDetailsService userDetailsService;
