@@ -2,6 +2,12 @@
 * Java 21
 * postgres.
 
+## This project demonstrates 
+* Spring data jpa
+* Spring security with JWT
+* Spring Scheduling
+* GRPC communication
+
 ## Configuration
 * create a database named ecom
 * configure password in ```genericEcom\ecom\src\main\resources\hibernate.cfg.xml```

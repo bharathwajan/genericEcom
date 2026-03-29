@@ -1,13 +1,11 @@
 spring:
   application:
     name: ecom        # optional, defaults to 'ecom'
-
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,10 +17,12 @@ spring:
             scripts:
               action: create
               create-target: src/main/resources/schema-creation.sql
-
   security:
     jwt:
       secret: ${Hs256SecretKey:Evb7Mepwi49E8pXiFehyF4cI54+POA9dr1OjtpyhVkc=}
+  cache:
+    # This is the switch to turn on/off caching Can take value like simple,none,redis
+    type: simple
 
 server:
   port: ${APPLICATION_PORT:8081}

@@ -58,6 +58,7 @@ public class HomepageController {
         return (CsrfToken)request.getAttribute("_csrf");
     }
 
+    
     @PutMapping("/updateProduct")
     public Map<String,String> updateProducts(@RequestBody Products prod){
         Integer prodId = productService.saveProduct(prod).getProdId();
