@@ -1,8 +1,8 @@
 package com.generic.ecom.view.Services;
 
-import com.learning.common.NotificationServiceGrpc;
-import com.learning.common.SendNotificationRequest;
-import com.learning.common.SendNotificationResponse;
+import com.learning.notification.SendNotificationRequest; // from common project
+import com.learning.notification.SendNotificationResponse; // from common project
+import com.learning.notification.NotificationServiceGrpc; // from common project
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 

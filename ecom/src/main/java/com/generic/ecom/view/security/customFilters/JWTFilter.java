@@ -1,4 +1,4 @@
-package com.generic.ecom.view.customFilters;
+package com.generic.ecom.view.security.customFilters;
 
 import com.generic.ecom.view.security.ecomUserDetailsService;
 import jakarta.servlet.FilterChain;

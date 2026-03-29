@@ -33,4 +33,4 @@ spec:
             - name: DB_USERNAME
               value: "postgres"
             - name: DB_PASSWORD
-              value: "sample_password"
+              value: "sample_password" # the password that we mentioned in the postgres deployment file

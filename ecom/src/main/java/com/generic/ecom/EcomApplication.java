@@ -8,10 +8,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 //import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(
-        exclude = {
-                org.springframework.grpc.autoconfigure.client.GrpcClientAutoConfiguration.class,
-                org.springframework.grpc.autoconfigure.server.GrpcServerAutoConfiguration.class
-        }
+//        exclude = {
+//
+//                org.springframework.grpc.autoconfigure.client.GrpcClientAutoConfiguration.class,
+//                org.springframework.grpc.autoconfigure.server.GrpcServerAutoConfiguration.class
+//        }
 )
 //@EnableFeignClients
 //@EnableDiscoveryClient
