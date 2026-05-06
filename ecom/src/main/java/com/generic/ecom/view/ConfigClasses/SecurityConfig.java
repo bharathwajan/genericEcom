@@ -1,14 +1,10 @@
-package com.generic.ecom.view;
+package com.generic.ecom.view.ConfigClasses;
 
 import com.generic.ecom.view.security.customFilters.JWTFilter;
 import com.generic.ecom.view.security.ecomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
-import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -35,9 +31,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@EnableCaching // This annotation will enable caching
-@EnableScheduling // This annotation will enable scheduling
-public class ConfigClass implements SchedulingConfigurer, CachingConfigurer {
+public class SecurityConfig  {
 
     @Autowired
     private ecomUserDetailsService userDetailsService;
@@ -92,13 +86,5 @@ public class ConfigClass implements SchedulingConfigurer, CachingConfigurer {
         // (web) create the class and the method inside it with @override and the contents after  --> will be pasted inside the method.
     }
 
-    @Override
-    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        // This method is used to configure the task scheduler for the scheduled tasks in the application
-        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-        threadPoolTaskScheduler.setPoolSize(5);
-        threadPoolTaskScheduler.setThreadNamePrefix("EcomSchedulerThreads-");
-        threadPoolTaskScheduler.initialize();
-        taskRegistrar.setTaskScheduler(threadPoolTaskScheduler);
-    }
+
 }

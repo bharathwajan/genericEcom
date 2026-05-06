@@ -31,7 +31,7 @@ public class ProductService {
         return repository.findById(id);
     }
 
-    // you Can  assume the cache
+    // you can  assume the cache
     // like a hashmap where the variable name is Constants.CacheConstants.product and
     // actual key is p.prodId which is what is what gets updated
     @CachePut(value=Constants.CacheConstants.product,key = "#p.prodId")

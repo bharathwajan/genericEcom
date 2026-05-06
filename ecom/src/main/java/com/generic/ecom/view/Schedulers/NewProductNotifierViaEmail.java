@@ -32,10 +32,10 @@ public class NewProductNotifierViaEmail {
         }
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000*10)
     public void flushTheCache(){
         try{
-            System.out.println("Flush the data cache every 5 seconds");
+            System.out.println("Flush the data cache every 5 seconds (Scheduler Example)");
         }
         catch (Exception e){
             System.out.println("Error while notifying users about new product: "+e.getMessage());
