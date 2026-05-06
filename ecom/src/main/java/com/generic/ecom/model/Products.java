@@ -1,16 +1,24 @@
 package com.generic.ecom.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity(name = "Products")
-public class Products {
+@Table(
+        indexes = {
+                @Index(name = "prod_name_index", columnList = "prodName"),
+                @Index(name = "prod_description_index", columnList = "prodDescription")
+        }
+)
+public class Products implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer prodId;  // Made it private
+    @Column(name = "prod_id")
+    private Integer prodId;
+    @Column(name = "prod_name", nullable = false)
     private String prodName;
+    @Column(name = "prod_description", nullable = true)
     private String prodDescription;
     public Integer getProdId() {
         return prodId;
@@ -27,7 +35,6 @@ public class Products {
     public String getProdDescription() {
         return prodDescription;
     }
-
     public void setProdDescription(String prodDescription) {
         this.prodDescription = prodDescription;
     }

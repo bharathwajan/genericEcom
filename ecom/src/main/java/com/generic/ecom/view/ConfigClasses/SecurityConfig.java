@@ -1,25 +1,27 @@
-package com.generic.ecom.view.security;
+package com.generic.ecom.view.ConfigClasses;
 
-import com.generic.ecom.view.customFilters.JWTFilter;
+import com.generic.ecom.view.security.customFilters.JWTFilter;
+import com.generic.ecom.view.security.ecomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachingConfigurer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -29,7 +31,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-public class securityConfig {
+public class SecurityConfig  {
 
     @Autowired
     private ecomUserDetailsService userDetailsService;
@@ -83,4 +85,6 @@ public class securityConfig {
         return (webSecCust) -> webSecCust.ignoring().requestMatchers("/signIn","/healthCheck");  // this lambda implementation simplyfies the above lines
         // (web) create the class and the method inside it with @override and the contents after  --> will be pasted inside the method.
     }
+
+
 }

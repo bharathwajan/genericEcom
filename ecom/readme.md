@@ -1,6 +1,12 @@
 ## Prerequist:
 * Java 21
-* postgres
+* postgres.
+
+## This project demonstrates 
+* Spring data jpa
+* Spring security with JWT
+* Spring Scheduling
+* GRPC communication
 
 ## Configuration
 * create a database named ecom
@@ -23,3 +29,4 @@
 
 
 branch feature/JPA --> migrated from hibernate to JPA.
+branch feature/microservice --> Made ecom as a service  which is eligible for a microservice archcitecture.
