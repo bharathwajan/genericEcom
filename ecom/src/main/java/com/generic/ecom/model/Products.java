@@ -3,12 +3,13 @@ package com.generic.ecom.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity(name = "Products")
 @Table(
         indexes = {
-                @Index(name = "prod_name_index", columnList = "prodName"),
-                @Index(name = "prod_description_index", columnList = "prodDescription")
+                @Index(name = "prod_name_index", columnList = "prod_name"), // columnList takes the column name which needs to be indexed
+                @Index(name = "prod_description_index", columnList = "prod_description")
         }
 )
 public class Products implements Serializable  {
@@ -38,4 +39,25 @@ public class Products implements Serializable  {
     public void setProdDescription(String prodDescription) {
         this.prodDescription = prodDescription;
     }
+
+    // using many to one since one owner can have multiple products, but each product has only one owner
+    // Lazy fetching is used here .. until we call the getOwner the owner details wont be fetched
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_username", referencedColumnName = "username")
+    private ProductOwners owner;
+
+    public BigDecimal getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    @Column(name = "prod_price", nullable = false)
+    private BigDecimal productPrice;
+
+    // Getters and Setters for owner
+    public ProductOwners getOwner() { return owner; }
+    public void setOwner(ProductOwners owner) { this.owner = owner; }
 }

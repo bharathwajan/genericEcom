@@ -17,8 +17,7 @@ public class ecomUserDetailsService implements UserDetailsService {
      */
     @Autowired
     private UserRepo userRepo;
-    @Autowired
-    private  JWTService jwtService;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

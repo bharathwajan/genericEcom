@@ -55,6 +55,11 @@ public class SiginAndLoginService {
         );
 
         if (auth.isAuthenticated()) {
+             /*
+             flow is authenticationManager which orchestrates the flow and it used a bean called authentocationProvider
+             this bean is responsible for validating the user credentials and it uses the userDetailsService to load the user details from the database
+             So far we got only the user details now we need to generate the token and send it back to the client so that the client will attach in subsequent request
+               */
             response.put("jwt_token", jwtService.generateToken(user.getUserName()));
             response.put("sessionId", request.getSession().getId());
 //            response.put("CSRFtoken", ((CsrfToken) request.getAttribute("_csrf")).getToken());

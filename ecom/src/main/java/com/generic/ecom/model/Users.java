@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
+
 @Entity(name = "Users")
 @Table(name = "users") // Specify table name
 public class Users {
@@ -19,6 +21,16 @@ public class Users {
     private String lastName;
     @Column(name = "email")
     private String email;
+    @Column(name = "walletbalance")
+    private BigDecimal walletBalance;
+
+    public BigDecimal getWalletBalance() {
+        return walletBalance;
+    }
+
+    public void setWalletBalance(BigDecimal walletBalance) {
+        this.walletBalance = walletBalance;
+    }
 
     public String getUserName() {
         return userName;

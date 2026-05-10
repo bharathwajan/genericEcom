@@ -17,6 +17,10 @@ spring:
             scripts:
               action: create
               create-target: src/main/resources/schema-creation.sql
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: "1"
   security:
     jwt:
       secret: ${Hs256SecretKey:Evb7Mepwi49E8pXiFehyF4cI54+POA9dr1OjtpyhVkc=}
@@ -32,7 +36,7 @@ spring:
       shutdown-timeout: 100ms
   cache:
     # This is the switch to turn on/off caching Can take value like simple,none,redis
-    type: redis
+    type: none
 server:
   port: ${APPLICATION_PORT:8081}
 grpc:

@@ -37,7 +37,6 @@ public class SecurityConfig  {
     private ecomUserDetailsService userDetailsService;
     @Autowired
     private JWTFilter JwtFilter;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
@@ -56,11 +55,16 @@ public class SecurityConfig  {
     }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        /*
+        This authentication bean is used to orchestrate the authentication process
+            * it uses the bean AuthenticationProvider to validate the user credentials and if the credentials are valid it will return an authenticated Authentication object
+         */
         return config.getAuthenticationManager(); // since AuthenticationManager is an interface we need to return the implementation of it
     }
     @Bean
     public AuthenticationProvider authProvider() {
         /*
+        This bean is used by Authentication Manager
         This AuthenticationProvider is the spring's defualt provider since we want implement our AuthenticationProvider
         we are replacing that bean with our bean.
 

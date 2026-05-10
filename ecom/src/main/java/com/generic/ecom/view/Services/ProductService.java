@@ -3,6 +3,7 @@ package com.generic.ecom.view.Services;
 import com.generic.ecom.model.Products;
 import com.generic.ecom.repo.ProductsRepo;
 import com.generic.ecom.view.Constants;
+import jakarta.transaction.Transactional;
 import org.hibernate.annotations.Cache;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -47,5 +48,4 @@ public class ProductService {
     public List<Products> getAllProducts(){
         return repository.findAll();
     }
-
 }
