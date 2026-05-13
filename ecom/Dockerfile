@@ -13,4 +13,5 @@ ENV DB_USERNAME="postgres"
 ENV DB_PASSWORD="sample_password"
 COPY --from=builder /build/target/ecom-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+# Run the application with the production profile
+CMD ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
