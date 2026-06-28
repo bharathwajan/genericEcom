@@ -41,6 +41,12 @@ spring:
     activate:
       on-profile: prod
 
+logger-path: ${LOGGER_FILE_PATH:logs}
+
+custom:
+  greeting:
+    message: "Hello from ecom service"
+
 server:
   port: ${APPLICATION_PORT:8081}
 grpc:

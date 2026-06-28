@@ -41,6 +41,6 @@ public class PurchaseService {
 
         user.setWalletBalance(user.getWalletBalance().subtract(product.getProductPrice()));
         productOwners.setEarnings(productOwners.getEarnings().add(product.getProductPrice()));
-        return true;
+        return true; // This ideally constructs SQL Transaction with BEGIN and COMMIT based on the above operation
     }
 }

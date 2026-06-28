@@ -21,7 +21,7 @@ public class MerchantController {
     @PostMapping("/upload-product-photo")
     public ResponseEntity<Map<String, String>> getUploadUrl(
             @RequestBody UploadProductImageDTO request) {
-        String presignedUrl = storageService.generateUploadUrl(request.fileName());
+        String presignedUrl = storageService.generateUploadUrl(request.fileName()); // this presigned url will be used by the UI to upload images directly to S3
         return ResponseEntity.ok(Map.of("uploadUrl", presignedUrl));
     }
 

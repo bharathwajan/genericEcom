@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="MY_LOG_DIR" value="${LOGGER_FILE_PATH:-hardcodedlogpath}" />
+
+    <appender name="ROLLING_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${MY_LOG_DIR}/ecom.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${MY_LOG_DIR}/archived/app-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--    A Console Appender is the specific component in a logging framework that takes your log messages and prints them directly to your screen-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.generic.ecom" level="DEBUG" additivity="false">
+        <appender-ref ref="ROLLING_FILE_APPENDER" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+<!--    If a library or a piece of code prints a log, and you haven't explicitly created a <logger> tag for its package,
+it falls back to the root logger.-->
+    <root level="WARN">
+        <appender-ref ref="ROLLING_FILE_APPENDER" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>
