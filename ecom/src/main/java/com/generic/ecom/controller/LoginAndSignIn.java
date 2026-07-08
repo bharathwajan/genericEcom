@@ -1,6 +1,7 @@
 package com.generic.ecom.controller;
 
 import com.generic.ecom.model.Users;
+import com.generic.ecom.view.Aspects.TrackTime;
 import com.generic.ecom.view.security.SiginAndLoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class LoginAndSignIn {
         return siginAndLoginService.signIn(user);
     }
 
+    @TrackTime // custom aspect to track the time taken by the method to execute
     @PostMapping("/login")
     public Map<String,String> login(@RequestBody Users user, HttpServletRequest request){
         // spring security will have this endpoint exposed for us but we are overriding it for our own implementation

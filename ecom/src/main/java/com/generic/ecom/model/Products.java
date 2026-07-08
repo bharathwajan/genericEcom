@@ -40,10 +40,11 @@ public class Products implements Serializable  {
         this.prodDescription = prodDescription;
     }
 
+    // this is a child table for the productOwner table
     // using many to one since one owner can have multiple products, but each product has only one owner
     // Lazy fetching is used here .. until we call the getOwner the owner details wont be fetched
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_username", referencedColumnName = "username")
+    @JoinColumn(name = "owner_username", referencedColumnName = "username") // this is what join
     private ProductOwners owner;
 
     public BigDecimal getProductPrice() {

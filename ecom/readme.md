@@ -1,6 +1,8 @@
 ## Prerequist:
 * Java 21
 * postgres.
+* xLibs --> library i developed to test spring custom auto configuration
+* 
 
 ## This project demonstrates 
 * Spring data jpa
