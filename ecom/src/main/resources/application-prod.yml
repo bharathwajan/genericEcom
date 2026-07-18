@@ -11,6 +11,13 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
+      hibernate:
+        jdbc:
+          # Set the batch size (30-50 is generally the sweet spot)
+          batch_size: 5
+        # Group inserts and updates together to maximize batching efficiency
+        order_inserts: true
+        order_updates: true
       jakarta:
         persistence:
           schema-generation: # Used to generate the schema creation script
@@ -40,13 +47,10 @@ spring:
   config:
     activate:
       on-profile: prod
-
 logger-path: ${LOGGER_FILE_PATH:logs}
-
 custom:
   greeting:
     message: "Hello from ecom service"
-
 server:
   port: ${APPLICATION_PORT:8081}
 grpc:

@@ -8,12 +8,14 @@ import org.hibernate.annotations.Cache;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Scope("singleton") // single ton is the default scope for service layer, but just to be explicit we are mentioning it here .
 public class ProductService {
     /*
     Everthing related to product management will be here, this is the service layer which will interact with the repository layer
@@ -27,7 +29,7 @@ public class ProductService {
         this.constants=constants;
     }
 
-    @Cacheable(value=Constants.CacheConstants.product,key = "#id")
+    @Cacheable(value=Constants.CacheConstants.product,key = "#id",sync = true)
     public Optional<Products> getProductById(Integer id){
         return repository.findById(id);
     }
@@ -47,5 +49,9 @@ public class ProductService {
 
     public List<Products> getAllProducts(){
         return repository.findAll();
+    }
+
+    public List<Products> saveAllProducts(List<Products> products) {
+        return repository.saveAll(products); // save all is implicitly transactional
     }
 }

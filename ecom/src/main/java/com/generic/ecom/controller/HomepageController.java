@@ -7,10 +7,12 @@ import com.generic.ecom.view.Services.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -84,5 +86,11 @@ public class HomepageController {
     public Map<String,String> callXlibs(@PathVariable String name){
         response.put(RESPONSE_ATTR_NAME,greetingService.sayHello(name));
         return  response;
+    }
+
+    @PostMapping("/save-all-products")
+    public ResponseEntity<?> saveAllProducts(@RequestBody List<Products> products) {
+        List<Products> savedProducts = productService.saveAllProducts(products);
+        return ResponseEntity.ok(savedProducts);
     }
 }

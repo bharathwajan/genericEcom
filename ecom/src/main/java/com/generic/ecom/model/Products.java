@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 )
 public class Products implements Serializable  {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // identity is bad for spring batching  you need to use sequence
     @Column(name = "prod_id")
     private Integer prodId;
     @Column(name = "prod_name", nullable = false)
