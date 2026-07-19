@@ -1,10 +1,13 @@
 package com.generic.ecom.view.Services;
 
+import com.generic.ecom.model.ProductOwners;
 import com.generic.ecom.model.Products;
 import com.generic.ecom.repo.ProductsRepo;
 import com.generic.ecom.view.Constants;
 import jakarta.transaction.Transactional;
 import org.hibernate.annotations.Cache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,6 +26,7 @@ public class ProductService {
      */
     private final ProductsRepo repository;
     private final Constants constants;
+    private final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     public ProductService(ProductsRepo repository, Constants constants){
         this.repository = repository;
@@ -31,6 +35,8 @@ public class ProductService {
 
     @Cacheable(value=Constants.CacheConstants.product,key = "#id",sync = true)
     public Optional<Products> getProductById(Integer id){
+        ProductOwners productOwner = repository.findById(id).map(Products::getOwner).orElse(null); // just to demonstrate how to get the product owner since product owner wont be fetched due to LAZY initialization in products entity
+        logger.info("The owner of the product {} {}", id, productOwner==null ? null : productOwner.getFirstName());
         return repository.findById(id);
     }
 

@@ -1,9 +1,11 @@
 package com.generic.ecom.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 
 @Entity(name = "Products")
 @Table(
@@ -41,10 +43,10 @@ public class Products implements Serializable  {
     }
     @Column(name = "prod_price", nullable = false)
     private BigDecimal productPrice;
-
     // this is a child table for the productOwner table
     // using many to one since one owner can have multiple products, but each product has only one owner
     // Lazy fetching is used here .. until we call the getOwner the owner details wont be fetched
+    @JsonIgnore // if you didn't added this JsonIgnore then while returning spring will use the jackson libarry to convert the response to json in that time this getter method is called which results in N+1 query problem which spoils the whole lazy fetching strategy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_username", referencedColumnName = "username") // this is what join
     private ProductOwners owner;
