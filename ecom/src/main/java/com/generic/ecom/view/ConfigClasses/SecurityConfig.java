@@ -1,5 +1,6 @@
 package com.generic.ecom.view.ConfigClasses;
 
+import com.generic.ecom.view.security.customFilters.IdempotencyFilter;
 import com.generic.ecom.view.security.customFilters.JWTFilter;
 import com.generic.ecom.view.security.ecomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class SecurityConfig  {
     private ecomUserDetailsService userDetailsService;
     @Autowired
     private JWTFilter JwtFilter;
+    @Autowired
+    private IdempotencyFilter idempotencyFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
@@ -46,6 +50,8 @@ public class SecurityConfig  {
                 ).httpBasic(withDefaults())
                 .csrf((csrf) -> csrf.disable())
                 .addFilterBefore(JwtFilter, UsernamePasswordAuthenticationFilter.class)
+                // Add it here, after authentication is confirmed
+                .addFilterAfter(idempotencyFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();

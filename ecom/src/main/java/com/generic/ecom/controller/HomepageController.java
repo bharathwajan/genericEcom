@@ -1,19 +1,17 @@
 package com.generic.ecom.controller;
-
 import com.example.Xlibs.Services.GreetingService;
+import com.generic.ecom.DTOs.HomePageControllerResponse;
 import com.generic.ecom.model.Products;
 import com.generic.ecom.view.Services.NotificationServiceGRPCClient;
 import com.generic.ecom.view.Services.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -26,7 +24,7 @@ public class HomepageController {
     private final NotificationServiceGRPCClient notificationService;
     private final com.example.Xlibs.Services.GreetingService greetingService;
 
-    Map<String, String> response = new HashMap<>();
+
     public HomepageController(ProductService productService, NotificationServiceGRPCClient notificationService, GreetingService greetingService) {
         this.notificationService = notificationService;
         this.productService = productService;
@@ -34,63 +32,113 @@ public class HomepageController {
     }
 
     @GetMapping("/getProduct/{prodId}")
-    public Map<String,Products> getProduct(@PathVariable Integer prodId){
+    public ResponseEntity<HomePageControllerResponse<Products>> getProduct(@PathVariable Integer prodId){
         logger.info("Get request received for the  Product : {}", prodId);
         Optional<Products> product = productService.getProductById(prodId);
-        Map<String, Products> response = new HashMap<>();
         notificationService.sendNotification( "bharathwajanr", "notification from ecom service");
-        response.put(RESPONSE_ATTR_NAME, product.orElse(null));
+        HomePageControllerResponse<Products> response = new HomePageControllerResponse<>(
+                true,
+                String.format("Product %d fetched successfully", prodId),
+                product.orElse(null));
         logger.info("Get request completed for the  Product : {}", prodId);
-        return response;
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
+    @GetMapping("/getProductByName/{prodName}")
+    public ResponseEntity<HomePageControllerResponse<List<Products>>> getProductByName(@PathVariable String prodName){
+        logger.info("Get request received for the  Product : {}", prodName);
+        Optional<List<Products>> product = productService.getProductByNames(prodName);
+
+        HomePageControllerResponse<List<Products>> response = new HomePageControllerResponse<>(
+                true,
+                product.isPresent() ? "Sucess" : "Failed",
+                product.orElse(null));
+
+        logger.info("Get request completed for the  Product : {}", prodName);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/")
-    public String homepage(HttpServletRequest request){
-        return "welcome Bharathwajan "+request.getSession().getId();
+    public ResponseEntity<HomePageControllerResponse<String>> homepage(HttpServletRequest request) {
+        String message = "Welcome Bharathwajan " + request.getSession().getId();
+        HomePageControllerResponse<String> response = new HomePageControllerResponse<>(
+                true,
+                "Homepage loaded successfully",
+                message);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/healthCheck")
-    public Map<String, String> healthCheck(){
-        response.put(RESPONSE_ATTR_NAME, "I am healthy");
-        return response; // just put hashmap spring will convert to json
+    public ResponseEntity<HomePageControllerResponse<String>> healthCheck() {
+
+        HomePageControllerResponse<String> apiResponse = new HomePageControllerResponse<>(
+                true,
+                "Health check successful",
+                null);
+
+        return ResponseEntity.ok(apiResponse);
     }
 
     @PostMapping("/putProducts")
-    public Map<String,String> putProducts(@RequestBody Products prods){
+    public ResponseEntity<HomePageControllerResponse<String>> putProducts(@RequestBody Products prods) {
         Integer prodId = productService.saveProduct(prods).getProdId();
-        response.put(RESPONSE_ATTR_NAME, String.format("Product %d added sucessfully",prodId));
-        return response;
+        String message = String.format("Product %d added successfully", prodId);
+        HomePageControllerResponse<String> response = new HomePageControllerResponse<>(
+                true,
+                "Product added successfully",
+                message);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/getCSRFtoken")
-    public CsrfToken getCSRF(HttpServletRequest request){
-        return (CsrfToken)request.getAttribute("_csrf");
+    public ResponseEntity<HomePageControllerResponse<CsrfToken>> getCSRF(HttpServletRequest request) {
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
+        HomePageControllerResponse<CsrfToken> response = new HomePageControllerResponse<>(
+                true,
+                "CSRF token fetched successfully",
+                csrfToken);
+        return ResponseEntity.ok(response);
     }
 
-    
     @PutMapping("/updateProduct")
-    public Map<String,String> updateProducts(@RequestBody Products prod){
+    public ResponseEntity<HomePageControllerResponse<Integer>> updateProducts(@RequestBody Products prod) {
         Integer prodId = productService.saveProduct(prod).getProdId();
-        response.put(RESPONSE_ATTR_NAME,String.format("Product %d updated sucessfully",prodId));
-        return  response;
+        HomePageControllerResponse<Integer> response = new HomePageControllerResponse<>(
+                true,
+                "Product updated successfully",
+                prodId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/deleteProduct/{prodId}")
-    public Map<String,String> deleteProduct(@PathVariable Integer prodId){
+    public ResponseEntity<HomePageControllerResponse<String>> deleteProduct(@PathVariable Integer prodId) {
         productService.deleteProductById(prodId);
-        response.put(RESPONSE_ATTR_NAME,String.format("Product %d deleted sucessfully",prodId));
-        return  response;
+        String message = String.format("Product %d deleted successfully", prodId);
+        HomePageControllerResponse<String> response = new HomePageControllerResponse<>(
+                true,
+                "Product deleted successfully",
+                message);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/callXlibs/{name}")
-    public Map<String,String> callXlibs(@PathVariable String name){
-        response.put(RESPONSE_ATTR_NAME,greetingService.sayHello(name));
-        return  response;
+    public ResponseEntity<HomePageControllerResponse<String>> callXlibs(@PathVariable String name) {
+        String greeting = greetingService.sayHello(name);
+        HomePageControllerResponse<String> response = new HomePageControllerResponse<>(
+                true,
+                "Greeting fetched successfully",
+                greeting);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/save-all-products")
-    public ResponseEntity<?> saveAllProducts(@RequestBody List<Products> products) {
+    public ResponseEntity<HomePageControllerResponse<List<Products>>> saveAllProducts(@RequestBody List<Products> products) {
         List<Products> savedProducts = productService.saveAllProducts(products);
-        return ResponseEntity.ok(savedProducts);
+        HomePageControllerResponse<List<Products>> response = new HomePageControllerResponse<>(
+                true,
+                "Products saved successfully",
+                savedProducts);
+        return ResponseEntity.ok(response);
     }
 }

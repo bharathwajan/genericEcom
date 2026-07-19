@@ -68,3 +68,29 @@ aws: # This is not taken for spring auto config, we are loading iit with config 
     buckets:
       product-images: product-images
       product-videos: product-intro-videos
+
+resilience4j:
+  retry:
+    instances:
+      notificationService:
+        max-attempts: 3
+        wait-duration: 1s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2 # Waits 1s, then 2s, then 4s
+
+  timelimiter: # Handles timeouts
+    instances:
+      notificationService:
+        timeout-duration: 2s
+
+  circuitbreaker:
+    instances:
+      notificationService:
+        sliding-window-size: 10
+        failure-rate-threshold: 50 # Trips if 50% of last 10 calls fail
+        wait-duration-in-open-state: 10s # Time before testing DB again
+
+  bulkhead:
+    notificationService:
+      demoApi:
+        max-concurrent-calls: 5 # Only 5 threads can execute this at once

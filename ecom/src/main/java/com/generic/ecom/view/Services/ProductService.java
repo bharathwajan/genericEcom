@@ -54,4 +54,8 @@ public class ProductService {
     public List<Products> saveAllProducts(List<Products> products) {
         return repository.saveAll(products); // save all is implicitly transactional
     }
+
+    public Optional<List<Products>> getProductByNames(String prodName){
+        return repository.findProductsByName(prodName);
+    }
 }

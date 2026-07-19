@@ -39,6 +39,8 @@ public class Products implements Serializable  {
     public void setProdDescription(String prodDescription) {
         this.prodDescription = prodDescription;
     }
+    @Column(name = "prod_price", nullable = false)
+    private BigDecimal productPrice;
 
     // this is a child table for the productOwner table
     // using many to one since one owner can have multiple products, but each product has only one owner
@@ -50,14 +52,9 @@ public class Products implements Serializable  {
     public BigDecimal getProductPrice() {
         return productPrice;
     }
-
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
-
-    @Column(name = "prod_price", nullable = false)
-    private BigDecimal productPrice;
-
     // Getters and Setters for owner
     public ProductOwners getOwner() { return owner; }
     public void setOwner(ProductOwners owner) { this.owner = owner; }
