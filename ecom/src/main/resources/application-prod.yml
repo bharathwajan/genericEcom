@@ -68,6 +68,11 @@ aws: # This is not taken for spring auto config, we are loading iit with config 
     buckets:
       product-images: product-images
       product-videos: product-intro-videos
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # you can restrict which actuator endpoints needs to be exposed with comma seperated "health,info,metrics"
 
 resilience4j:
   retry:

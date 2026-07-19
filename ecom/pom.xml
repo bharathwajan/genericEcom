@@ -137,6 +137,10 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!-- If you are using MySQL/PostgreSQL, Flyway sometimes requires its specific database module in newer versions -->
         <!-- Source: https://mvnrepository.com/artifact/org.flywaydb/flyway-database-postgresql -->
         <dependency>

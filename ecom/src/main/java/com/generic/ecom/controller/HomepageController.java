@@ -19,7 +19,6 @@ import java.util.Optional;
 public class HomepageController {
 
     private final Logger logger = LoggerFactory.getLogger(HomepageController.class);
-    private final static String RESPONSE_ATTR_NAME = "response";
     private final ProductService productService;
     private final NotificationServiceGRPCClient notificationService;
     private final com.example.Xlibs.Services.GreetingService greetingService;
@@ -43,7 +42,6 @@ public class HomepageController {
         logger.info("Get request completed for the  Product : {}", prodId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 
     @GetMapping("/getProductByName/{prodName}")
     public ResponseEntity<HomePageControllerResponse<List<Products>>> getProductByName(@PathVariable String prodName){
