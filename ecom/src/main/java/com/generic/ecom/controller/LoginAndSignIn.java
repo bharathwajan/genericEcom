@@ -14,8 +14,13 @@ import java.util.Map;
 @RestController
 public class LoginAndSignIn {
 
-    @Autowired
-    public SiginAndLoginService siginAndLoginService; // views(service) layer
+
+    public final SiginAndLoginService siginAndLoginService; // views(service) layer
+
+    public LoginAndSignIn(SiginAndLoginService siginAndLoginService) {
+        this.siginAndLoginService = siginAndLoginService;
+    }
+
 
     @PostMapping("/signIn")
     public Map<String,String> signIn(@RequestBody Users user){
