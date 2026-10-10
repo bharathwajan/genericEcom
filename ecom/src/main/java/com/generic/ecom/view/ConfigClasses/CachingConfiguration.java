@@ -1,6 +1,7 @@
 package com.generic.ecom.view.ConfigClasses;
 
 import com.generic.ecom.view.Constants;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachingConfigurer;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @Configuration
 @EnableCaching
+@ConditionalOnProperty(value = "spring.cache.type", havingValue = "redis", matchIfMissing = true)
 public class CachingConfiguration implements CachingConfigurer {
 
     @Bean
