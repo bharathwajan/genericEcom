@@ -3,16 +3,14 @@ package com.generic.ecom.view.Services;
 import com.generic.ecom.model.ProductOwners;
 import com.generic.ecom.model.Products;
 import com.generic.ecom.model.Users;
-import com.generic.ecom.repo.ProductownerRepo;
-import com.generic.ecom.repo.ProductsRepo;
-import com.generic.ecom.repo.UserRepo;
+import com.generic.ecom.DAOs.ProductownerRepo;
+import com.generic.ecom.DAOs.ProductsRepo;
+import com.generic.ecom.DAOs.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class PurchaseService {

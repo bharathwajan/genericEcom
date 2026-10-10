@@ -2,8 +2,8 @@ package com.generic.ecom.view.Schedulers;
 
 import com.generic.ecom.model.Products;
 import com.generic.ecom.model.Users;
-import com.generic.ecom.repo.ProductsRepo;
-import com.generic.ecom.repo.UserRepo;
+import com.generic.ecom.DAOs.ProductsRepo;
+import com.generic.ecom.DAOs.UserRepo;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.ThreadLocalRandom;

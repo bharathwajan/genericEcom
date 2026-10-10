@@ -23,6 +23,11 @@ public class CachingConfiguration implements CachingConfigurer {
 
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+        /*
+        Here we are defining multiple cache configurations with different TTLs (Time To Live) for different cache names.
+        The default configuration is used for any cache that doesn't have a specific configuration defined.
+        For the product cache (used as an example)
+         */
 
         // 1. Default Configuration (Fallback for unmapped caches)
         RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()

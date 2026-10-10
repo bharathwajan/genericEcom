@@ -1,7 +1,7 @@
 package com.generic.ecom.view.Services;
 
 import com.generic.ecom.model.Products;
-import com.generic.ecom.repo.ProductsRepo;
+import com.generic.ecom.DAOs.ProductsRepo;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

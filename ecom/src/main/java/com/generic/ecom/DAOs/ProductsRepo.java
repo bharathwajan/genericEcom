@@ -1,4 +1,4 @@
-package com.generic.ecom.repo;
+package com.generic.ecom.DAOs;
 
 import com.generic.ecom.model.Products;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -13,3 +13,4 @@ Used to control replica in a modern way , the difference between replication con
 ## app-deployments
 Used to create deployment --> which will create replicaSet upon applying
 ## postgres-deployments
+

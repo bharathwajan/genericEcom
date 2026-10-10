@@ -1,7 +1,7 @@
 package com.generic.ecom.view.security;
 
 import com.generic.ecom.model.Users;
-import com.generic.ecom.repo.UserRepo;
+import com.generic.ecom.DAOs.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,6 @@ public class ecomUserDetailsService implements UserDetailsService {
      */
     @Autowired
     private UserRepo userRepo;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

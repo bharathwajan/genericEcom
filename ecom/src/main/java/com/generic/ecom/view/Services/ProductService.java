@@ -2,10 +2,8 @@ package com.generic.ecom.view.Services;
 
 import com.generic.ecom.model.ProductOwners;
 import com.generic.ecom.model.Products;
-import com.generic.ecom.repo.ProductsRepo;
+import com.generic.ecom.DAOs.ProductsRepo;
 import com.generic.ecom.view.Constants;
-import jakarta.transaction.Transactional;
-import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;

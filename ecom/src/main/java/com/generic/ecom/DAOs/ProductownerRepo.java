@@ -1,7 +1,6 @@
-package com.generic.ecom.repo;
+package com.generic.ecom.DAOs;
 
 import com.generic.ecom.model.ProductOwners;
-import com.generic.ecom.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
