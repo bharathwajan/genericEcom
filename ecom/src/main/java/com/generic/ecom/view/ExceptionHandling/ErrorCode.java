@@ -1,4 +1,4 @@
-package com.generic.ecom.view.Aspects;
+package com.generic.ecom.view.ExceptionHandling;
 
 public enum ErrorCode {
     INSUFFICIENT_BALANCE,

@@ -1,4 +1,4 @@
-package com.generic.ecom.view.Aspects;
+package com.generic.ecom.view.ExceptionHandling;
 
 public class BusinessException extends RuntimeException{
     /*

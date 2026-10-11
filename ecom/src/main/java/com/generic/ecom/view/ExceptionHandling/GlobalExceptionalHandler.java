@@ -23,4 +23,47 @@ public class GlobalExceptionalHandler {
         HomePageControllerResponse<String> response = new HomePageControllerResponse<>(false ,"Error in executing the query",ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response); // Bad request is used when the input given violates the accepted input
     }
+
+    public static class ApiErrorResponse {
+        private int status;
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getErrorCode() {
+            return errorCode;
+        }
+
+        public void setErrorCode(String errorCode) {
+            this.errorCode = errorCode;
+        }
+
+        private String errorCode;
+        private String message;
+
+        public ApiErrorResponse(int status, String errorCode, String message) {
+            this.status = status;
+            this.errorCode = errorCode;
+            this.message = message;
+        }
+        // constructor, getters, setters
+    }
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiErrorResponse> handleGenericException(BusinessException ex) {
+        ApiErrorResponse error = new ApiErrorResponse(ex.getStatus(), ex.getErrorCode().toString(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.valueOf(ex.getStatus())); // dynamic error codes as well
+    }
 }
